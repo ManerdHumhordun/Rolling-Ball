@@ -21,7 +21,6 @@ public class Timer : MonoBehaviour {
         if (complete)
             return;
 
-        //float t = Time.time - startTime;
         float t = startTime - Time.time;
 
         string minutes = ((int)t / 60).ToString();
@@ -29,8 +28,6 @@ public class Timer : MonoBehaviour {
         double sec = (t % 60);
 
         timerText.text = minutes + ":" + seconds;
-
-        //seconds.Equals("0.00") ||
 
         if (sec <= 0.00)
             Lose();
