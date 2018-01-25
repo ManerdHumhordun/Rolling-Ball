@@ -7,13 +7,13 @@ public class Timer : MonoBehaviour {
 
     public Text timerText;
     public Text loseText;
-    private float startTime;
+    private float elapsedTime;
     private float timeGiven = 30;
     private bool complete = false;
 
 	// Use this for initialization
 	void Start () {
-        startTime = timeGiven;
+        elapsedTime = timeGiven;
 	}
 
     // Update is called once per frame
@@ -21,7 +21,8 @@ public class Timer : MonoBehaviour {
         if (complete)
             return;
 
-        float t = startTime - Time.time;
+        elapsedTime += Time.deltaTime;
+        float t = timeGiven - elapsedTime;
 
         string minutes = ((int)t / 60).ToString();
         string seconds = (t % 60).ToString("f2");
