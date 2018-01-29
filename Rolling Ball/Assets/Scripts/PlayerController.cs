@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
@@ -11,10 +12,19 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody rb;
     private int count;
     private bool win = true;
+    //private int elapsedTime;
+    private List<GameObject> pickups;
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody>();
+
+        pickups = new List<GameObject>();
+        //Get access to pickups
+        pickups.AddRange(GameObject.FindGameObjectsWithTag("Pick Up"));
+        pickups.AddRange(GameObject.FindGameObjectsWithTag("Pick Up++"));
+        print("Num of pickups: " + pickups.Count);
+
         StartNewGame();
     }
 
@@ -24,7 +34,19 @@ public class PlayerController : MonoBehaviour {
         count = 0;
         SetCountText();
         winText.text = "";
-        
+                
+        //Re-enable all pickups
+        foreach (var gameObj in pickups)
+        {
+            gameObj.SetActive(true);
+
+            //Randomize the locations of each pickup.
+            Vector3 randLocation = new Vector3(Random.Range(-8, 8), 0.5f, Random.Range(-8, 8));
+            gameObj.transform.position = randLocation;
+        }
+
+        win = true;
+        //elapsedTime = 0;
     }
 
 
@@ -40,7 +62,9 @@ public class PlayerController : MonoBehaviour {
         //Did user press N?
         if (Input.GetKeyDown(KeyCode.N))
         {
-            StartNewGame();
+            //StartNewGame();
+            //Restart the scene.
+            SceneManager.LoadScene("Rolling Ball");
         }
 	}
 
